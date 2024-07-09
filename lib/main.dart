@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: width < minWidth ? minWidth : (width > maxWidth ? maxWidth : width),
                   padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.25),
+                    color: Colors.deepPurple.withOpacity(0.25),
                     borderRadius: BorderRadius.circular(17),
                   ),
                   child: Form(
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               labelText: "Kullanıcı Adı",
-                              labelStyle: TextStyle(color: Colors.amber),
+                              labelStyle: TextStyle(color: Colors.teal),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
                                 BorderSide(color: Colors.indigo, width: 1.0),
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               labelText: "Parola",
-                              labelStyle: TextStyle(color: Colors.amber),
+                              labelStyle: TextStyle(color: Colors.teal),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
                                 BorderSide(color: Colors.indigo, width: 1.0),
