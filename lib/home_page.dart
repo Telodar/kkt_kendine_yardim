@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/main.dart';
+import 'package:kkt_kendine_yardim/module_1.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       home: HomePage(),
       routes: {
-        '/Login': (context) => LoginPage(), // main yönlendirmesi burada tanımlanıyor
+        '/Login': (context) => LoginPage(),// Login yönlendirmesi burada tanımlanıyor
+        '/Module':(context) => ModulePage(),
       },
     );
   }
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
-              // Profil sayfasına git fonksiyonu
+              Navigator.pushNamed(context, '/Module'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
             },
           ),
           IconButton(
@@ -82,7 +84,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.message),
               title: Text('Mesajlar'),
               onTap: () {
-                // Mesajlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/Module');
               },
             ),
             ListTile(
@@ -110,7 +112,7 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
           ),
           Align(
-            alignment: Alignment(-0.6,0),
+            alignment: Alignment(0,-0.6),
             child: Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -118,8 +120,8 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               constraints: BoxConstraints(
-                maxWidth: 600, // Konteynerin genişliğini sınırlayabilirsiniz
-                maxHeight: 600, // Konteynerin yüksekliğini sınırlayabilirsiniz
+                maxWidth: 1000, // Konteynerin genişliğini sınırlayabilirsiniz
+                maxHeight: 300, // Konteynerin yüksekliğini sınırlayabilirsiniz
               ),
               child: SingleChildScrollView(
                 child: ListView(
@@ -198,7 +200,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Align(
-            alignment: Alignment(0.6,0),
+            alignment: Alignment(0,0.6),
             child: Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -206,8 +208,8 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               constraints: BoxConstraints(
-                maxWidth: 600, // Konteynerin genişliğini sınırlayabilirsiniz
-                maxHeight: 600, // Konteynerin yüksekliğini sınırlayabilirsiniz
+                maxWidth: 1000, // Konteynerin genişliğini sınırlayabilirsiniz
+                maxHeight: 300, // Konteynerin yüksekliğini sınırlayabilirsiniz
               ),
               child: SingleChildScrollView(
                 child: ListView(

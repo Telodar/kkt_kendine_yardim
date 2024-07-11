@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkt_kendine_yardim/home_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Login Page',
       home: const LoginPage(),
+      routes: {
+        '/Home':(context)=> HomePage(),
+      },
     );
   }
 }
@@ -23,6 +27,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late String username;
   late String password;
 
@@ -37,7 +42,71 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple.withOpacity(0.4), // AppBar'ın rengi burada belirleniyor
+        title: Text('Kendine Yardım'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/Login'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
+            },
+            child: Text('Giriş Yap', style: TextStyle(color: Colors.white)),
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushNamed(context, '/Home'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              _scaffoldKey.currentState!.openEndDrawer(); // Drawer'ı sağ taraftan aç
+            },
+          ),
+        ],
+      ),
+      endDrawer: Drawer( // Drawer'ı sağ tarafa taşımak için endDrawer kullanılıyor
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.deepPurple,
+              ),
+              child: Text(
+                'Profil',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.message),
+              title: Text('Mesajlar'),
+              onTap: () {
+                // Mesajlar sayfasına git fonksiyonu
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profil'),
+              onTap: () {
+                // Profil sayfasına git fonksiyonu
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Ayarlar'),
+              onTap: () {
+                // Ayarlar sayfasına git fonksiyonu
+              },
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           // Arka plan resmi
@@ -60,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: width < minWidth ? minWidth : (width > maxWidth ? maxWidth : width),
                   padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.25),
+                    color: Colors.deepPurple .withOpacity(0.25),
                     borderRadius: BorderRadius.circular(17),
                   ),
                   child: Form(
