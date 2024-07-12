@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/main.dart';
-import 'package:kkt_kendine_yardim/module_1.dart';
-
+import 'module_1.dart';
+import 'module_2.dart';
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       builder: (context, widget) => ResponsiveWrapper.builder(
         ClampingScrollWrapper.builder(context, widget!),
         breakpoints: [
-          ResponsiveBreakpoint.resize(350, name: MOBILE),
-          ResponsiveBreakpoint.autoScale(600, name: TABLET),
-          ResponsiveBreakpoint.resize(800, name: DESKTOP),
+          const ResponsiveBreakpoint.resize(350, name: MOBILE),
+          const ResponsiveBreakpoint.autoScale(600, name: TABLET),
+          const ResponsiveBreakpoint.resize(800, name: DESKTOP),
         ],
       ),
-      home: HomePage(),
+      home: const HomePage(),
       routes: {
-        '/Login': (context) => LoginPage(),// Login yönlendirmesi burada tanımlanıyor
-        '/Module':(context) => ModulePage(),
+        '/Login': (context) => const LoginPage(),// Login yönlendirmesi burada tanımlanıyor
+        '/Test': (context) => const TestPage(),
+        '/M2': (context) => const M2Page(),
       },
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -41,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple.withOpacity(0.4), // AppBar'ın rengi burada belirleniyor
+        backgroundColor: Colors.indigo.withOpacity(0.4),
         title: Text('Kendine Yardım'),
         actions: [
           TextButton(
@@ -51,9 +56,9 @@ class _HomePageState extends State<HomePage> {
             child: Text('Giriş Yap', style: TextStyle(color: Colors.white)),
           ),
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.home),
             onPressed: () {
-              Navigator.pushNamed(context, '/Module'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
+              Navigator.pushNamed(context, '/Home'); // Ana sayfaya yönlendirme
             },
           ),
           IconButton(
@@ -64,16 +69,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      endDrawer: Drawer( // Drawer'ı sağ tarafa taşımak için endDrawer kullanılıyor
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: Colors.indigo.withOpacity(0.5),
               ),
               child: Text(
-                'Profil',
+                'Modüller',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -81,22 +86,22 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Mesajlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 1'),
               onTap: () {
-                Navigator.pushNamed(context, '/Module');
+                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profil'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 2'),
               onTap: () {
-                // Profil sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Ayarlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 3'),
               onTap: () {
                 // Ayarlar sayfasına git fonksiyonu
               },

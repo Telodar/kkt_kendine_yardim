@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kkt_kendine_yardim/main.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/home_page.dart';
+import 'package:kkt_kendine_yardim/module_2.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,33 +20,45 @@ class MyApp extends StatelessWidget {
           ResponsiveBreakpoint.resize(800, name: DESKTOP),
         ],
       ),
-      home: ModulePage(),
+      home: TestPage(),
       routes: {
         '/Home': (context) => HomePage(), // HomePage yönlendirmesi Tanımı
         '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
+        '/Test': (context) => const TestPage(),
+        '/M2': (context) => const M2Page(),
       },
     );
   }
 }
 
-class ModulePage extends StatefulWidget {
-  const ModulePage({super.key});
+class TestPage extends StatefulWidget {
+  const TestPage({super.key});
 
   @override
-  State<ModulePage> createState() => _ModulePageState();
+  State<TestPage> createState() => _TestPageState();
 }
 
-class _ModulePageState extends State<ModulePage> {
+class _TestPageState extends State<TestPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textController = TextEditingController();
 
+  void _submitForm() {
+    String text = _textController.text;
+    print(text); // Terminale yazdırma
+    _textController.clear(); // Textbox'ı temizleme
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = MediaQuery.of(context).size.width >= 1000;
+    final double sidePadding = isDesktop ? 200 : 30;
+    final double horizontalPadding = isDesktop ? 200 : 0;
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.cyan.withOpacity(0.4),
-        title: Text('Kendine Yardım'),
+        backgroundColor: Colors.indigo.withOpacity(0.4),
+        title: Text('Modül 1'),
         actions: [
           TextButton(
             onPressed: () {
@@ -73,33 +86,33 @@ class _ModulePageState extends State<ModulePage> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.indigo,
+                color: Colors.indigo.withOpacity(0.5),
               ),
               child: Text(
-                'Profil',
+                'Modüller',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 24,
                 ),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Mesajlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 1'),
               onTap: () {
-                // Mesajlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profil'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 2'),
               onTap: () {
-                // Profil sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Ayarlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 3'),
               onTap: () {
                 // Ayarlar sayfasına git fonksiyonu
               },
@@ -110,7 +123,7 @@ class _ModulePageState extends State<ModulePage> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: sidePadding),
             child: Column(
               children: [
                 SizedBox(height: 100), // Sayfanın kaydırılabilir kısmı için boşluk
@@ -143,7 +156,7 @@ class _ModulePageState extends State<ModulePage> {
                         "internetten videolar izlemiş ve sosyal medyada gezinmişti. O günkü gitmesine gereken"
                         "derse de -bu kafayla gitsem zaten bir Şey anlamayacağım canım istemiyor- diyerek"
                         "gitmemişti."
-                        "Yakın arkadaşı Hacer son dönemde Ayşe'nin davranışlarında farklılık olduğunu görmüş ve"
+                        "Yakın  arkadaşı Hacer son dönemde Ayşe'nin davranışlarında farklılık olduğunu görmüş ve"
                         "nasıl hissettiğini sormuştu. Ayşe'de -kendimi çok yorgun hissediyorum, canım hiçbir şey"
                         "yapmak istemiyor. Sanırım bende bir bozukluk var. Kendimi diğer insanların içinde bile"
                         "yalnız hissediyorum, çok değersizim- demişti.",
@@ -158,6 +171,7 @@ class _ModulePageState extends State<ModulePage> {
             alignment: Alignment.bottomCenter,
             child: Container(
               padding: EdgeInsets.all(20),
+              margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
               color: Colors.white,
               child: Row(
                 children: [
@@ -168,15 +182,14 @@ class _ModulePageState extends State<ModulePage> {
                         border: OutlineInputBorder(),
                         labelText: 'Mesajınızı buraya yazın',
                       ),
+                      onSubmitted: (value) {
+                        _submitForm();
+                      },
                     ),
                   ),
                   SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {
-                      String text = _textController.text;
-                      print(text); // Terminale yazdırma
-                      _textController.clear(); // Textbox'ı temizleme
-                    },
+                    onPressed: _submitForm,
                     child: Text('Gönder'),
                   ),
                 ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kkt_kendine_yardim/home_page.dart';
+import 'package:kkt_kendine_yardim/module_1.dart';
+import 'module_2.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,6 +15,10 @@ class MyApp extends StatelessWidget {
       home: const LoginPage(),
       routes: {
         '/Home':(context)=> HomePage(),
+        '/Test': (context) => TestPage(),
+        '/M2': (context) => const M2Page(),
+
+
       },
     );
   }
@@ -42,9 +48,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple.withOpacity(0.4), // AppBar'ın rengi burada belirleniyor
+        backgroundColor: Colors.indigo.withOpacity(0.4),
         title: Text('Kendine Yardım'),
         actions: [
           TextButton(
@@ -56,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
           IconButton(
             icon: Icon(Icons.home),
             onPressed: () {
-              Navigator.pushNamed(context, '/Home'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
+              Navigator.pushNamed(context, '/Home'); // Ana sayfaya yönlendirme
             },
           ),
           IconButton(
@@ -67,16 +74,16 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       ),
-      endDrawer: Drawer( // Drawer'ı sağ tarafa taşımak için endDrawer kullanılıyor
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: Colors.indigo.withOpacity(0.5),
               ),
               child: Text(
-                'Profil',
+                'Modüller',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -84,22 +91,22 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Mesajlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 1'),
               onTap: () {
-                // Mesajlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profil'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 2'),
               onTap: () {
-                // Profil sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Ayarlar'),
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 3'),
               onTap: () {
                 // Ayarlar sayfasına git fonksiyonu
               },
