@@ -3,6 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/main.dart';
 import 'module_1.dart';
 import 'module_2.dart';
+import 'module_3.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       routes: {
         '/Login': (context) => const LoginPage(),// Login yönlendirmesi burada tanımlanıyor
-        '/Test': (context) => const TestPage(),
+        '/M1': (context) => const M1Page(),
         '/M2': (context) => const M2Page(),
+        '/M3': (context) => const M3Page(),
       },
     );
   }
@@ -89,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 1'),
               onTap: () {
-                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
@@ -103,7 +105,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 3'),
               onTap: () {
-                // Ayarlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
               },
             ),
           ],

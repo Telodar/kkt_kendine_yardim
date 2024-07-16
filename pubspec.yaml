@@ -40,6 +40,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   responsive_framework: ^0.1.4
+  photo_view: ^0.14.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -56,6 +57,8 @@ flutter:
   assets:
     - android\assets\insan_logo.png
     - android\assets\arkaplan.png
+    - android\assets\Module_3.png
+    - android\assets\Module_3_1.png
 
 
   # The following line ensures that the Material Icons font is

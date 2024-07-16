@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kkt_kendine_yardim/module_2.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:kkt_kendine_yardim/main.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/home_page.dart';
 import 'module_1.dart';
-import 'module_3.dart';
+import 'module_3_table.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -20,35 +23,43 @@ class MyApp extends StatelessWidget {
           ResponsiveBreakpoint.resize(800, name: DESKTOP),
         ],
       ),
-      home: M2Page(),
+      home: M3Page(),
       routes: {
         '/Home': (context) => HomePage(), // HomePage yönlendirmesi Tanımı
         '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
         '/M1': (context) => const M1Page(),
-        '/M3': (context) => const M3Page(),
-
-
+        '/M2': (context) => M2Page(),
+        '/M3T': (context) => const M3tablePage(),
       },
     );
   }
 }
 
-class M2Page extends StatefulWidget {
-  const M2Page({super.key});
+class M3Page extends StatefulWidget {
+  const M3Page({super.key});
 
   @override
-  State<M2Page> createState() => _M2PageState();
+  State<M3Page> createState() => _M3PageState();
 }
 
-class _M2PageState extends State<M2Page> {
+class _M3PageState extends State<M3Page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<TextEditingController> _textControllers = List.generate(5, (index) => TextEditingController());
 
-  void _submitForm() {
-    for (var controller in _textControllers) {
-      print(controller.text); // Terminale yazdırma
-      controller.clear(); // Textbox'ı temizleme
-    }
+  void _showPhoto(BuildContext context, String imagePath) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(),
+          body: Center(
+            child: PhotoView(
+              imageProvider: AssetImage(imagePath),
+              backgroundDecoration: BoxDecoration(color: Colors.black),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -102,22 +113,28 @@ class _M2PageState extends State<M2Page> {
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 1'),
               onTap: () {
-                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 2'),
               onTap: () {
-                // Profil sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M2'); // Profil sayfasına git fonksiyonu
               },
             ),
             ListTile(
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 3'),
               onTap: () {
-                Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
+                // Ayarlar sayfasına git fonksiyonu
               },
+            ),
+            ListTile(
+              leading: Icon(Icons.onetwothree),
+              title: Text('Modül 3T'),
+              onTap: () {
+                Navigator.pushNamed(context, '/M3T');              },
             ),
           ],
         ),
@@ -135,42 +152,61 @@ class _M2PageState extends State<M2Page> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Text(
-                "Hepimiz zaman zaman Ayşe ya da Efe gibi zor dönemler geçirebiliriz. Fakat bu süre"
-                    "uzadığında kendimizle ilgili duygu düşünceler ve bedenimizde hissettiklerimiz"
-                    "yoğunlaştığında sanki bir çıkmaz sokağa girmiş ve orada sıkışmış gibi hissedebiliriz. Gelin"
-                    "bu sokakta başlayan yolculuğa birlikte çıkalım."
-                    "Bugün yolculuğun başındayız, peki siz yolculuğun başarılı bir şekilde gerçekleştiğini siz"
-                    "nereden anlayacaksınız? Yolculuğun sonuna geldiğimizi siz nereden anlayacaksınız? Artık"
-                    "bugünden farklı olarak neyi yapmaya başlıyor olacaksınız? Bu süreçteki hedefleriniz"
-                    "neler?"
-                    "Kaygınızı azaltmayı veya kontrol etmeyi istediğinizi ya da içinde buluduğunuz olumsuz"
-                    "bu duygudurumdan kurtulmak istediğinizi, daha mutlu veya özgüvenli olmayı istediğinizi"
-                    "tahmin edebiliyorum. Ama benim asıl sormak istediğim bütün bunlar olduğunda siz ne"
-                    "yapıyor olacaksınız? Aşağıya neler yapıyor olacağınızı belirtiniz.",
+                "Belki hayatınız ile Ayşe’nin hayatı arasında bazı benzerlikleri ve farklılıkları görmüşsünüz. Çalışmanın bu"
+                    "kısmında Ayşe’nin yaşadığı durumlardaki davranışlarını birlikte analiz edelim. Sonra da siz yaşadığınız"
+                    "durumlarda kendi davranışlarınızın analizini yapabileceksiniz."
+                ,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            SizedBox(height: 20), // Sabit metin ve form arasında boşluk
-            for (int i = 0; i < 5; i++)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextField(
-                  controller: _textControllers[i],
-                  decoration: InputDecoration(
-                    labelText: 'Mesaj ${i + 1}',
-                    border: UnderlineInputBorder(),
-                  ),
-                  onSubmitted: (value) {
-                    _submitForm();
-                  },
+            SizedBox(height: 20), // Metin ile resim arasında 20 piksel boşluk
+            GestureDetector(
+              onTap: () => _showPhoto(context, 'android/assets/Module_3.png'),
+              child: AspectRatio(
+                aspectRatio: 16 / 9, // Resmin en-boy oranı
+                child: Image.asset(
+                  'android/assets/Module_3.png',
+                  fit: BoxFit.contain, // Resmin oranını koruyarak görüntüle
                 ),
               ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: _submitForm,
-              child: Text('Gönder'),
             ),
-            SizedBox(height: 20), // Butonun altında boşluk
+            SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.only(bottom: 30),
+              decoration: BoxDecoration(
+                color: Colors.indigo.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Text(
+              "Şimdi odaklanmaya karar verdiğiniz sorun üzerinde duralım. Bu sorunu en son ne zaman ve nerede"
+              "yaşadınız? Öncelikle olayla ilgili A sütununda yazılı olan soruları altına cevaplarını yazınız. Daha sonra"
+              "bütün bu duygu düşünce ve bedensel hisler geldiğinde ne yaptığınızı B sütununa yazın. Daha sonra"
+              "bu olayın kısa ve uzun vadede ne gibi sonuçlar ortaya çıkardığını da C sütununa yazınız.",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+            SizedBox(height: 20),
+            GestureDetector(
+              onTap: () => _showPhoto(context, 'android/assets/Module_3_1.png'),
+              child: AspectRatio(
+                aspectRatio: 16 / 9, // Resmin en-boy oranı
+                child: Image.asset(
+                  'android/assets/Module_3_1.png',
+                  fit: BoxFit.contain, // Resmin oranını koruyarak görüntüle
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed :()
+              {
+                Navigator.pushNamed(context, '/M3T');
+              },
+              child: Text('Başla'),
+            ),
+            SizedBox(height: 50),
+
           ],
         ),
       ),

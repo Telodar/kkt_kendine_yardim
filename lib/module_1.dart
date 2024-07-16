@@ -3,6 +3,7 @@ import 'package:kkt_kendine_yardim/main.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/home_page.dart';
 import 'package:kkt_kendine_yardim/module_2.dart';
+import 'module_3.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,25 +21,25 @@ class MyApp extends StatelessWidget {
           ResponsiveBreakpoint.resize(800, name: DESKTOP),
         ],
       ),
-      home: TestPage(),
+      home: M1Page(),
       routes: {
         '/Home': (context) => HomePage(), // HomePage yönlendirmesi Tanımı
         '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
-        '/Test': (context) => const TestPage(),
         '/M2': (context) => const M2Page(),
+        '/M3': (context) => const M3Page(),
       },
     );
   }
 }
 
-class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+class M1Page extends StatefulWidget {
+  const M1Page({super.key});
 
   @override
-  State<TestPage> createState() => _TestPageState();
+  State<M1Page> createState() => _M1PageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _M1PageState extends State<M1Page> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textController = TextEditingController();
 
@@ -100,7 +101,6 @@ class _TestPageState extends State<TestPage> {
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 1'),
               onTap: () {
-                Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
@@ -114,7 +114,7 @@ class _TestPageState extends State<TestPage> {
               leading: Icon(Icons.onetwothree),
               title: Text('Modül 3'),
               onTap: () {
-                // Ayarlar sayfasına git fonksiyonu
+                Navigator.pushNamed(context, '/M3'); // Ayarlar sayfasına git fonksiyonu
               },
             ),
           ],
