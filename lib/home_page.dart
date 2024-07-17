@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:kkt_kendine_yardim/main.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
 import 'module_1.dart';
 import 'module_2.dart';
 import 'module_3.dart';
+import 'module_4.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/M1': (context) => const M1Page(),
         '/M2': (context) => const M2Page(),
         '/M3': (context) => const M3Page(),
+        '/M4': (context) => const M4Page(),
       },
     );
   }
@@ -88,24 +92,31 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.onetwothree),
+              leading: Icon(Icons.looks_one),
               title: Text('Modül 1'),
               onTap: () {
                 Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.onetwothree),
+              leading: Icon(Icons.looks_two),
               title: Text('Modül 2'),
               onTap: () {
                 Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
               },
             ),
             ListTile(
-              leading: Icon(Icons.onetwothree),
+              leading: Icon(Icons.looks_3),
               title: Text('Modül 3'),
               onTap: () {
                 Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.looks_4),
+              title: Text('Modül 4'),
+              onTap: () {
+                Navigator.pushNamed(context, '/M4');
               },
             ),
           ],
@@ -206,6 +217,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          SizedBox(height: 50),
           Align(
             alignment: Alignment(0,0.6),
             child: Container(
