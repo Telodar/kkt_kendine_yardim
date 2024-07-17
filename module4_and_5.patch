@@ -1,0 +1,844 @@
+Subject: [PATCH] module4 and 5
+---
+Index: lib/module_5.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/module_5.dart b/lib/module_5.dart
+new file mode 100644
+--- /dev/null	(date 1721218179374)
++++ b/lib/module_5.dart	(date 1721218179374)
+@@ -0,0 +1,238 @@
++import 'package:flutter/material.dart';
++import 'package:kkt_kendine_yardim/module_2.dart';
++import 'package:photo_view/photo_view.dart';
++import 'package:kkt_kendine_yardim/main.dart';
++import 'package:responsive_framework/responsive_framework.dart';
++import 'package:kkt_kendine_yardim/home_page.dart';
++import 'module_1.dart';
++import 'module_3_table.dart';
++import 'module_4.dart';
++
++void main() {
++  runApp(MyApp());
++}
++
++class MyApp extends StatelessWidget {
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      builder: (context, widget) => ResponsiveWrapper.builder(
++        ClampingScrollWrapper.builder(context, widget!),
++        breakpoints: [
++          ResponsiveBreakpoint.resize(350, name: MOBILE),
++          ResponsiveBreakpoint.resize(600, name: TABLET),
++          ResponsiveBreakpoint.resize(800, name: DESKTOP),
++        ],
++      ),
++      home: M5Page(),
++      routes: {
++        '/Home': (context) => HomePage(), // HomePage yönlendirmesi Tanımı
++        '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
++        '/M1': (context) => const M1Page(),
++        '/M2': (context) => M2Page(),
++        '/M3T': (context) => const M3tablePage(),
++        '/M4': (context) => const M4Page(),
++      },
++    );
++  }
++}
++
++class M5Page extends StatefulWidget {
++  const M5Page({super.key});
++
++  @override
++  State<M5Page> createState() => _M5PageState();
++}
++
++class _M5PageState extends State<M5Page> {
++  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
++
++  void _showPhoto(BuildContext context, String imagePath) {
++    Navigator.push(
++      context,
++      MaterialPageRoute(
++        builder: (context) => Scaffold(
++          appBar: AppBar(),
++          body: Center(
++            child: PhotoView(
++              imageProvider: AssetImage(imagePath),
++              backgroundDecoration: BoxDecoration(color: Colors.black),
++            ),
++          ),
++        ),
++      ),
++    );
++  }
++
++  @override
++  Widget build(BuildContext context) {
++    final bool isDesktop = MediaQuery.of(context).size.width >= 1000;
++    final double sidePadding = isDesktop ? 200 : 30;
++
++    return Scaffold(
++      key: _scaffoldKey,
++      appBar: AppBar(
++        backgroundColor: Colors.indigo.withOpacity(0.4),
++        title: Text('Kendine Yardım'),
++        actions: [
++          TextButton(
++            onPressed: () {
++              Navigator.pushNamed(context, '/Login'); // Giriş yap butonuna tıklandığında Login sayfasına yönlendirme
++            },
++            child: Text('Giriş Yap', style: TextStyle(color: Colors.white)),
++          ),
++          IconButton(
++            icon: Icon(Icons.home),
++            onPressed: () {
++              Navigator.pushNamed(context, '/Home'); // Ana sayfaya yönlendirme
++            },
++          ),
++          IconButton(
++            icon: Icon(Icons.menu),
++            onPressed: () {
++              _scaffoldKey.currentState!.openEndDrawer(); // Drawer'ı sağ taraftan aç
++            },
++          ),
++        ],
++      ),
++      endDrawer: Drawer(
++        child: ListView(
++          padding: EdgeInsets.zero,
++          children: <Widget>[
++            DrawerHeader(
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.5),
++              ),
++              child: Text(
++                'Modüller',
++                style: TextStyle(
++                  color: Colors.black,
++                  fontSize: 24,
++                ),
++              ),
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_one),
++              title: Text('Modül 1'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_two),
++              title: Text('Modül 2'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M2'); // Profil sayfasına git fonksiyonu
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_3),
++              title: Text('Modül 3'),
++              onTap: () {
++                // Ayarlar sayfasına git fonksiyonu
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M4');              },
++            ),
++          ],
++        ),
++      ),
++      body: SingleChildScrollView(
++        padding: EdgeInsets.symmetric(horizontal: sidePadding),
++        child: Column(
++          children: [
++            SizedBox(height: 100), // Sayfanın kaydırılabilir kısmı için boşluk
++            Container(
++              padding: EdgeInsets.all(20),
++              margin: EdgeInsets.only(bottom: 30),
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.8),
++                borderRadius: BorderRadius.circular(15.0),
++              ),
++              child: Text(
++              "Şimdi bu kontrol yöntemleri ile ilgili aşağıdaki soruları kendinize sorun ve her birini"
++              "cevapladıktan sonra diğer soruya geçiniz."
++                ,
++                style: TextStyle(color: Colors.white, fontSize: 20),
++              ),
++            ),
++            SizedBox(height: 20),
++            Container(
++              padding: EdgeInsets.all(20),
++              margin: EdgeInsets.only(bottom: 30),
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.8),
++                borderRadius: BorderRadius.circular(15.0),
++              ),
++              child: Text(
++                  "Kontrol yöntemi uyguladığımda içsel deneyimle (duygu, düşünce ve bedensel hisler) başa"
++            "çıkmak kısa vadede kolaylaşıyor gibi görünebilir. Peki ya uzun vadede kolaylaşıyor mu,"
++            "zorlaşıyor mu?",
++                style: TextStyle(color: Colors.white, fontSize: 20),
++              ),
++
++            ),
++            SizedBox(height: 20),
++            Container(
++              padding: EdgeInsets.all(20),
++              margin: EdgeInsets.only(bottom: 30),
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.8),
++                borderRadius: BorderRadius.circular(15.0),
++              ),
++              child: Text(
++                "Kendinizi değerlendirdiğinizde bu stratejilerden hangilerini, ne sıklıkta kullanıyorsunuz?",
++                style: TextStyle(color: Colors.white, fontSize: 20),
++              ),
++
++            ),
++            SizedBox(height: 20),
++            Container(
++              padding: EdgeInsets.all(20),
++              margin: EdgeInsets.only(bottom: 30),
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.8),
++                borderRadius: BorderRadius.circular(15.0),
++              ),
++              child: Text(
++                ". Bu stratejilerden herhangi birini uygulamak hayatınızı nasıl etkiliyor? (zaman ve para"
++                  "maliyeti açısından? Sağlık, boş zaman ve ilişkiler açısından?)",
++                style: TextStyle(color: Colors.white, fontSize: 20),
++              ),
++
++            ),
++            SizedBox(height: 20),
++            Container(
++              padding: EdgeInsets.all(20),
++              margin: EdgeInsets.only(bottom: 30),
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.8),
++                borderRadius: BorderRadius.circular(15.0),
++              ),
++              child: Text(
++                "İç deneyimlerinize (duygu, düşünce ve bedensel hisler) karşı bu mücadeleyi daha ne kadar"
++                  "sürdürebilirsiniz?",
++                style: TextStyle(color: Colors.white, fontSize: 20),
++              ),
++
++            ),
++            SizedBox(height: 20),
++            ElevatedButton(
++              onPressed :()
++              {
++
++              },
++              child: Text('Gönder'),
++            ),
++            SizedBox(height: 50),
++
++          ],
++        ),
++      ),
++    );
++  }
++}
+Index: lib/module_3.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/module_3.dart b/lib/module_3.dart
+--- a/lib/module_3.dart	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/lib/module_3.dart	(date 1721213925112)
+@@ -6,6 +6,7 @@
+ import 'package:kkt_kendine_yardim/home_page.dart';
+ import 'module_1.dart';
+ import 'module_3_table.dart';
++import 'module_4.dart';
+ 
+ void main() {
+   runApp(MyApp());
+@@ -30,6 +31,7 @@
+         '/M1': (context) => const M1Page(),
+         '/M2': (context) => M2Page(),
+         '/M3T': (context) => const M3tablePage(),
++        '/M4': (context) => const M4Page(),
+       },
+     );
+   }
+@@ -110,31 +112,31 @@
+               ),
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_one),
+               title: Text('Modül 1'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_two),
+               title: Text('Modül 2'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M2'); // Profil sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_3),
+               title: Text('Modül 3'),
+               onTap: () {
+                 // Ayarlar sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
+-              title: Text('Modül 3T'),
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
+               onTap: () {
+-                Navigator.pushNamed(context, '/M3T');              },
++                Navigator.pushNamed(context, '/M4');              },
+             ),
+           ],
+         ),
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/README.md	(date 1721217870734)
+@@ -2,6 +2,8 @@
+ 
+ İnsanarın uzaktan psikolojik destek alması için hazırlanan internet projesi.
+ 
++Güncel durumda projenin yarısı tamamlanış ve geriye 3 modül kalmıştır.
++
+ ## Getting Started
+ 
+ This project is a starting point for a Flutter application.
+Index: lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/main.dart b/lib/main.dart
+--- a/lib/main.dart	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/lib/main.dart	(date 1721213925137)
+@@ -3,6 +3,7 @@
+ import 'module_1.dart';
+ import 'module_2.dart';
+ import 'module_3.dart';
++import 'module_4.dart';
+ 
+ void main() => runApp(const MyApp());
+ 
+@@ -19,6 +20,7 @@
+         '/M1': (context) => M1Page(),
+         '/M2': (context) => const M2Page(),
+         '/M3': (context) => const M3Page(),
++        '/M4': (context) => const M4Page(),
+       },
+     );
+   }
+@@ -91,26 +93,32 @@
+               ),
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_one),
+               title: Text('Modül 1'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_two),
+               title: Text('Modül 2'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_3),
+               title: Text('Modül 3'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
+               },
+             ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M4');              },
++            ),
+           ],
+         ),
+       ),
+Index: lib/module_2.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/module_2.dart b/lib/module_2.dart
+--- a/lib/module_2.dart	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/lib/module_2.dart	(date 1721213925105)
+@@ -4,6 +4,8 @@
+ import 'package:kkt_kendine_yardim/home_page.dart';
+ import 'module_1.dart';
+ import 'module_3.dart';
++import 'module_4.dart';
++
+ void main() {
+   runApp(MyApp());
+ }
+@@ -26,6 +28,7 @@
+         '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
+         '/M1': (context) => const M1Page(),
+         '/M3': (context) => const M3Page(),
++        '/M4': (context) => const M4Page(),
+ 
+ 
+       },
+@@ -99,26 +102,32 @@
+               ),
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_one),
+               title: Text('Modül 1'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/Test'); // Mesajlar sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_two),
+               title: Text('Modül 2'),
+               onTap: () {
+                 // Profil sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_3),
+               title: Text('Modül 3'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
+               },
+             ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M4');              },
++            ),
+           ],
+         ),
+       ),
+Index: lib/home_page.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/home_page.dart b/lib/home_page.dart
+--- a/lib/home_page.dart	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/lib/home_page.dart	(date 1721214343760)
+@@ -4,6 +4,8 @@
+ import 'module_1.dart';
+ import 'module_2.dart';
+ import 'module_3.dart';
++import 'module_4.dart';
++
+ void main() {
+   runApp(const MyApp());
+ }
+@@ -28,6 +30,7 @@
+         '/M1': (context) => const M1Page(),
+         '/M2': (context) => const M2Page(),
+         '/M3': (context) => const M3Page(),
++        '/M4': (context) => const M4Page(),
+       },
+     );
+   }
+@@ -88,26 +91,32 @@
+               ),
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_one),
+               title: Text('Modül 1'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M1'); // Mesajlar sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_two),
+               title: Text('Modül 2'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_3),
+               title: Text('Modül 3'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M3');// Ayarlar sayfasına git fonksiyonu
+               },
+             ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M4');              },
++            ),
+           ],
+         ),
+       ),
+@@ -206,6 +215,7 @@
+               ),
+             ),
+           ),
++          SizedBox(height: 50),
+           Align(
+             alignment: Alignment(0,0.6),
+             child: Container(
+Index: lib/module_1.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/module_1.dart b/lib/module_1.dart
+--- a/lib/module_1.dart	(revision 954094fc08b9add028f194589360ba925677a18c)
++++ b/lib/module_1.dart	(date 1721213925124)
+@@ -4,6 +4,7 @@
+ import 'package:kkt_kendine_yardim/home_page.dart';
+ import 'package:kkt_kendine_yardim/module_2.dart';
+ import 'module_3.dart';
++import 'module_4.dart';
+ 
+ void main() {
+   runApp(MyApp());
+@@ -27,6 +28,7 @@
+         '/Login': (context) => LoginPage(), // Login yönlendirmesi burada tanımlanıyor
+         '/M2': (context) => const M2Page(),
+         '/M3': (context) => const M3Page(),
++        '/M4': (context) => const M4Page(),
+       },
+     );
+   }
+@@ -98,25 +100,31 @@
+               ),
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_one),
+               title: Text('Modül 1'),
+               onTap: () {
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_two),
+               title: Text('Modül 2'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M2');// Profil sayfasına git fonksiyonu
+               },
+             ),
+             ListTile(
+-              leading: Icon(Icons.onetwothree),
++              leading: Icon(Icons.looks_3),
+               title: Text('Modül 3'),
+               onTap: () {
+                 Navigator.pushNamed(context, '/M3'); // Ayarlar sayfasına git fonksiyonu
+               },
+             ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M4');              },
++            ),
+           ],
+         ),
+       ),
+Index: lib/module_4.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/module_4.dart b/lib/module_4.dart
+new file mode 100644
+--- /dev/null	(date 1721214232390)
++++ b/lib/module_4.dart	(date 1721214232390)
+@@ -0,0 +1,256 @@
++import 'package:flutter/material.dart';
++import 'package:kkt_kendine_yardim/module_1.dart';
++import 'package:kkt_kendine_yardim/module_2.dart';
++import 'package:kkt_kendine_yardim/home_page.dart';
++import 'package:kkt_kendine_yardim/main.dart';
++import 'package:kkt_kendine_yardim/module_3.dart';
++import 'package:responsive_framework/responsive_framework.dart';
++
++void main() {
++  runApp(MyApp());
++}
++
++class MyApp extends StatelessWidget {
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      builder: (context, widget) => ResponsiveWrapper.builder(
++        ClampingScrollWrapper.builder(context, widget!),
++        breakpoints: [
++          ResponsiveBreakpoint.resize(350, name: MOBILE),
++          ResponsiveBreakpoint.resize(600, name: TABLET),
++          ResponsiveBreakpoint.resize(800, name: DESKTOP),
++        ],
++      ),
++      home: const M4Page(),
++      routes: {
++        '/Home': (context) => HomePage(),
++        '/Login': (context) => LoginPage(), // LoginPage olmadığı için HomePage yapıldı
++        '/M1': (context) => const M1Page(),
++        '/M2': (context) => M2Page(),
++        '/M3': (context) => M3Page(),
++        '/M4': (context) => const M4Page(),
++      },
++    );
++  }
++}
++
++class M4Page extends StatefulWidget {
++  const M4Page({Key? key}) : super(key: key);
++
++  @override
++  _M4PageState createState() => _M4PageState();
++}
++
++class _M4PageState extends State<M4Page> {
++  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
++
++  final TextEditingController _controller1 = TextEditingController();
++  final TextEditingController _controller2 = TextEditingController();
++  final TextEditingController _controller3 = TextEditingController();
++  final TextEditingController _controller4 = TextEditingController();
++  final TextEditingController _controller5 = TextEditingController();
++  final TextEditingController _controller6 = TextEditingController();
++
++  void _submitForm() {
++    print('Kaçınma: ${_controller1.text}');
++    print('Tartışma: ${_controller2.text}');
++    print('Bastırma: ${_controller3.text}');
++    print('Hissizleştirme: ${_controller4.text}');
++    print('Dikkat Değiştirme: ${_controller5.text}');
++    print('Olumlu Telkin: ${_controller6.text}');
++
++    _controller1.clear();
++    _controller2.clear();
++    _controller3.clear();
++    _controller4.clear();
++    _controller5.clear();
++    _controller6.clear();
++  }
++
++  @override
++  Widget build(BuildContext context) {
++    final bool isDesktop = MediaQuery.of(context).size.width >= 1000;
++    final double sidePadding = isDesktop ? 200 : 30;
++
++    return Scaffold(
++      key: _scaffoldKey,
++      appBar: AppBar(
++        backgroundColor: Colors.indigo.withOpacity(0.4),
++        title: Text('Kendine Yardım'),
++        actions: [
++          TextButton(
++            onPressed: () {
++              Navigator.pushNamed(context, '/Login');
++            },
++            child: Text('Giriş Yap', style: TextStyle(color: Colors.white)),
++          ),
++          IconButton(
++            icon: Icon(Icons.home),
++            onPressed: () {
++              Navigator.pushNamed(context, '/Home');
++            },
++          ),
++          IconButton(
++            icon: Icon(Icons.menu),
++            onPressed: () {
++              _scaffoldKey.currentState!.openEndDrawer();
++            },
++          ),
++        ],
++      ),
++      endDrawer: Drawer(
++        child: ListView(
++          padding: EdgeInsets.zero,
++          children: <Widget>[
++            DrawerHeader(
++              decoration: BoxDecoration(
++                color: Colors.indigo.withOpacity(0.5),
++              ),
++              child: Text(
++                'Modüller',
++                style: TextStyle(
++                  color: Colors.black,
++                  fontSize: 24,
++                ),
++              ),
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_one),
++              title: Text('Modül 1'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M1');
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_two),
++              title: Text('Modül 2'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M2');
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_3),
++              title: Text('Modül 3'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M3'); // Modül 3'e git fonksiyonu
++              },
++            ),
++            ListTile(
++              leading: Icon(Icons.looks_4),
++              title: Text('Modül 4'),
++              onTap: () {
++                Navigator.pushNamed(context, '/M3T');              },
++            ),
++          ],
++        ),
++      ),
++      body: SingleChildScrollView(
++        padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 20),
++        child: Column(
++          crossAxisAlignment: CrossAxisAlignment.stretch,
++          children: [
++            Container(
++              decoration: BoxDecoration(
++                borderRadius: BorderRadius.circular(10),
++                border: Border.all(color: Colors.grey),
++                color: Colors.white,
++              ),
++              padding: EdgeInsets.all(20),
++              child: Column(
++                crossAxisAlignment: CrossAxisAlignment.start,
++                children: [
++                  Text(
++                      "Az önceki yazdığınız tabloya baktığınızda içsel deneyimlerinizle başa çıkmak veya onları kontrol "
++                          "etmeye çalışmak için neler yaptığınıza bir bakın (B Sütunu). İnsanlar yaşadığı olumsuz duygu ve "
++                          "düşüncelerden kurtulmak için bazı kontrol yöntemlerini uygulamaktadır. Aşağıda bu kontrol "
++                          "yöntemlerine yönelik örnekler verilmiştir (Harris, 2019). Siz de eğer bunlara benzer uyguladığınız "
++                          "kontrol yöntemleri varsa konuyla ilgili boş kutulara bunları yazınız."),
++                  SizedBox(height: 10),
++                  Table(
++                    border: TableBorder.all(color: Colors.transparent),
++                    columnWidths: {
++                      0: FlexColumnWidth(1),
++                      1: FlexColumnWidth(1),
++                      2: FlexColumnWidth(1),
++                    },
++                    children: [
++                      _buildTableRow('Kaçınma: Sizi rahatsız edebilecek durumlardan uzak durma', 'Kaygı yaşamamak için arkadaşlarının davetini geri çevirmek.', _controller1),
++                      _buildTableRow('Tartışma: Aklınıza gelen düşünceyi çürütmek için ona mantıklı bir karşılık vermek.', '+Hiçbir şeyi beceremiyorum -Hayır daha önce şunları şunları yapmıştın.', _controller2),
++                      _buildTableRow('Bastırma: Sizi rahatsız eden duygu ve düşünceleri bastırmaktır.', 'Duygu ve düşünceler yokmuş gibi yapmak', _controller3),
++                      _buildTableRow('Hissizleştirme: Kendini hissizleştirmeye çalışarak duygu ve düşüncelerden kurtulmaya çalışmak.', 'Alkol, sigara kullanma, kendine zarar verme', _controller4),
++                      _buildTableRow('Dikkat Değiştirme: İstemediğin duygu ve düşünceler geldiğinde dikkati başka yöne vererek onlardan kurtulma', 'İstenmeyen duygu düşünce geldiğinde, tv izleme, Kitap okuma sosyal medyada gezinme', _controller5),
++                      _buildTableRow('Olumlu Telkin: Kendi düşünce ve duygularını yönetmek için olumlu telkinde bulunma', 'Kendine gel, sen iyisin, yaparsın', _controller6),
++                    ],
++                  ),
++                  SizedBox(height: 20),
++                  ElevatedButton(
++                    onPressed: _submitForm,
++                    child: Text('Gönder'),
++                  ),
++                ],
++              ),
++            ),
++            SizedBox(height: 20),
++            Text(
++                "Aslında bu girişimleriniz oldukça makul ve çoğu insanın yaptığı şeyi yapıyorsunuz. Bu girişimler aşırıya"
++                "kaçmadan, işe yarayacakları zaman ve sizin değerleriniz doğrultusunda yaşamanıza engel olmadığında"
++            "sorun yok fakat tam tersi durumlarda bu yöntemler sorunlara yol açabilmektedir",
++            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 15,),),
++
++          ],
++        ),
++      ),
++    );
++  }
++
++  TableRow _buildTableRow(String text1, String text2, TextEditingController controller) {
++    return TableRow(
++      children: [
++        _buildTableCell(text1),
++        _buildTableCell(text2),
++        _buildTableCellWithTextField(controller),
++      ],
++    );
++  }
++
++  Widget _buildTableCell(String text) {
++    return Padding(
++      padding: const EdgeInsets.all(10.0),
++      child: Container(
++        height: 80,
++        decoration: BoxDecoration(
++          color: Colors.lightBlue.shade50,
++          borderRadius: BorderRadius.circular(10),
++        ),
++        padding: EdgeInsets.all(10),
++        child: SingleChildScrollView(
++          child: Text(
++            text,
++            style: TextStyle(color: Colors.black),
++          ),
++        ),
++      ),
++    );
++  }
++
++  Widget _buildTableCellWithTextField(TextEditingController controller) {
++    return Padding(
++      padding: const EdgeInsets.all(10.0),
++      child: Container(
++        height: 80,
++        decoration: BoxDecoration(
++          color: Colors.lightBlue.shade50,
++          borderRadius: BorderRadius.circular(10),
++        ),
++        padding: EdgeInsets.all(10),
++        child: TextFormField(
++          controller: controller,
++          decoration: InputDecoration(
++            border: InputBorder.none,
++          ),
++        ),
++      ),
++    );
++  }
++}

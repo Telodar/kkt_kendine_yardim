@@ -2,6 +2,8 @@
 
 İnsanarın uzaktan psikolojik destek alması için hazırlanan internet projesi.
 
+Güncel durumda projenin yarısı tamamlanış ve geriye 3 modül kalmıştır.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
